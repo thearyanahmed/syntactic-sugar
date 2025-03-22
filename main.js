@@ -20,7 +20,7 @@ router.get('/first', async (req, res) => {
   const requestId = generateRequestId();
 
   try {
-    // This one runs like async code. Syntactic Sugar of /third
+    // This one runs like sync code. Syntactic Sugar of /third
     const result1 = await createPromise(requestId, 3, 'promise1');
     const result2 = await createPromise(requestId, 4, 'promise2');
     const result3 = await createPromise(requestId, 5, 'promise3');
