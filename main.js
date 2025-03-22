@@ -21,6 +21,10 @@ router.get('/first', async (req, res) => {
 
   try {
     // This one runs like sync code. Syntactic Sugar of /third
+    // Two benefits,
+    
+    // 1. try catch can handle the errors from any of them
+    // 2. the first one's results can be used in the subsequent createPromise() if needed
     const result1 = await createPromise(requestId, 3, 'promise1');
     const result2 = await createPromise(requestId, 4, 'promise2');
     const result3 = await createPromise(requestId, 5, 'promise3');
