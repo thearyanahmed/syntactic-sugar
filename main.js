@@ -20,6 +20,7 @@ router.get('/first', async (req, res) => {
   const requestId = generateRequestId();
 
   try {
+    // This one runs like async code. Syntactic Sugar of /third
     const result1 = await createPromise(requestId, 3, 'promise1');
     const result2 = await createPromise(requestId, 4, 'promise2');
     const result3 = await createPromise(requestId, 5, 'promise3');
@@ -34,6 +35,14 @@ router.get('/first', async (req, res) => {
 router.get('/second', (req, res) => {
   const requestId = generateRequestId();
 
+  // No await
+  // Behaves like 
+  // go createPromise(&wg, 1)
+  // go createPromise(&wg, 2)
+  // go createPromise(&wg, 3)
+  // go createPromise(&wg, 4)
+
+  // Promise.All()'s then() block is kinda equivalent to wg.wait()
   const promise1 = createPromise(requestId, 3, 'promise1');
   const promise2 = createPromise(requestId, 4, 'promise2');
   const promise3 = createPromise(requestId, 5, 'promise3');
@@ -79,11 +88,20 @@ router.get('/third', (req, res) => {
 router.get('/fourth', (req, res) => {
   const requestId = generateRequestId();
 
+  // Similar to `/second`
+  // if first createPromise() function's value is important to the next (second createPromise() and so on),
+  // then this approach won't work
+
+  // This is equivalent to 
+  // go createPromise(nil, 1)
+  // go createPromise(nil, 2)
+  // go createPromise(nil, 3) // nil is the waitgroup
+
+  // Also, js doens't have channels, so no way to communicate from Result: 1 to Result : 2
   createPromise(requestId, 3, 'promise1').then((result1) => console.log(`${requestId} - Result 1: ${result1}`))
   createPromise(requestId, 4, 'promise2').then((result2) => console.log(`${requestId} - Result 2: ${result2}`))
   createPromise(requestId, 5, 'promise3').then((result3) => console.log(`${requestId} - Result 3: ${result3}`))
 
-  
 });
 
 app.use('/', router);
