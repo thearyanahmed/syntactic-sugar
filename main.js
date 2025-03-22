@@ -79,9 +79,9 @@ router.get('/third', (req, res) => {
 router.get('/fourth', (req, res) => {
   const requestId = generateRequestId();
 
-  createPromise(requestId, 3, 'promise1').then(() => console.log(`${requestId} - Result 1: ${result1}`))
-  createPromise(requestId, 4, 'promise2').then(() => console.log(`${requestId} - Result 2: ${result1}`))
-  createPromise(requestId, 5, 'promise3').then(() => console.log(`${requestId} - Result 3: ${result1}`))
+  createPromise(requestId, 3, 'promise1').then((result1) => console.log(`${requestId} - Result 1: ${result1}`))
+  createPromise(requestId, 4, 'promise2').then((result2) => console.log(`${requestId} - Result 2: ${result2}`))
+  createPromise(requestId, 5, 'promise3').then((result3) => console.log(`${requestId} - Result 3: ${result3}`))
 
   
 });
