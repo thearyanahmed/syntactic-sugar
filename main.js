@@ -93,7 +93,7 @@ router.get('/fourth', (req, res) => {
   const requestId = generateRequestId();
 
   // Similar to `/second`
-  // if first createPromise() function's value is important to the next (second createPromise() and so on),
+  // if first createPromise() function's returned value is important to the next (second createPromise() and so on),
   // then this approach won't work
 
   // This is equivalent to 
